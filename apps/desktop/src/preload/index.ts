@@ -3,6 +3,7 @@ import { desktopEvents } from "./desktop-events-api";
 import { voice } from "./voice-api";
 import { imageModels } from "./image-models-api";
 import { webSearch } from "./web-search-api";
+import { plugins } from "./plugins-api";
 import { bookIdentity } from "./book-identity-api";
 import { longMaterialPack } from "./long-material-pack-api";
 import { libraryPackage } from "./library-package-api";
@@ -982,6 +983,7 @@ async function exportLongManuscript(
 const api: DeepWriteApi = {
   imageModels,
   webSearch,
+  plugins,
   bookIdentity,
   longMaterialPack,
   libraryPackage,

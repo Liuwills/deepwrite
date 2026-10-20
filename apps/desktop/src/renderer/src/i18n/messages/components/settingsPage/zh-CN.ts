@@ -19,6 +19,7 @@ export default {
   appearance: "外观",
   voiceSettings: "语音模型",
   contextSettings: "上下文",
+  extensions: "扩展",
   archived: "已归档",
   archivedConversations: "已归档的聊天",
   archivedConversationsDescription:

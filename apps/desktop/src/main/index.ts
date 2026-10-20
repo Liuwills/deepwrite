@@ -17,6 +17,8 @@ import {
 import { createStorageSettingsService } from "./storage-settings-runtime";
 import type { StorageSettingsService } from "./storage-settings-service";
 import { handleStorageSettingsCommands } from "./ipc/storage-settings-commands";
+import { handlePluginCommands } from "./plugins/plugin-commands";
+import type { PluginHost } from "./plugins/plugin-host";
 import { runStorageSmoke } from "./smoke-storage";
 import {
   recordUsageObservation,
@@ -269,6 +271,7 @@ let marketplaceClient: MarketplaceClient | undefined;
 let agentTeamMarketplaceClient: AgentTeamMarketplaceClient | undefined;
 let cloudBackupService: CloudBackupService | undefined;
 let deviceSyncService: ReturnType<typeof createDesktopDeviceSync> | undefined;
+let pluginHost: PluginHost | undefined;
 const rendererStateFlush = createRendererStateFlushCoordinator();
 const conversationSyncLease = createConversationSyncLeaseCoordinator(
   () => mainWindow
@@ -1038,6 +1041,28 @@ function registerIpc(): void {
           );
           if (result) return result;
         }
+      }
+      if (command.type.startsWith("plugins.")) {
+        if (event.senderFrame !== event.sender.mainFrame) {
+          return {
+            status: "rejected",
+            requestId: command.id,
+            error: {
+              code: "plugins.untrusted_frame",
+              message: "插件管理仅允许从应用主界面操作。"
+            }
+          };
+        }
+        const result = await handlePluginCommands(command, pluginHost, {
+          chooseDirectory: async () => {
+            const selection = await dialog.showOpenDialog(requireMainWindow(), {
+              title: "选择插件目录",
+              properties: ["openDirectory"]
+            });
+            return selection.canceled ? null : (selection.filePaths[0] ?? null);
+          }
+        });
+        if (result) return result;
       }
       if (
         command.type.startsWith("storageSettings.") &&
@@ -2414,6 +2439,12 @@ if (!hasSingleInstanceLock) {
         command: (command) => supervisor.requestCommand("core", command, 0),
         busy: () => activeRuns.size > 0,
         conversationLease: conversationSyncLease,
+        builtinPluginsDirectory: join(
+          app.getAppPath(),
+          "out",
+          "main",
+          "builtin-plugins"
+        ),
         installUpdate: () => beginGracefulShutdown({ installUpdate: true })
       })
     );
@@ -2440,6 +2471,7 @@ if (!hasSingleInstanceLock) {
       marketplaceClient,
       agentTeamMarketplaceClient
     } = services);
+    pluginHost = services.pluginHost;
     storageSettingsService = createStorageSettingsService({
       locations: storageBootstrap!.locations,
       workspace: requireWorkspaceDirectoryStore,
@@ -2486,6 +2518,9 @@ if (!hasSingleInstanceLock) {
       );
     });
     refreshDesktopServices(services, desktopStartup.log);
+    await services.pluginHost.initialize().catch((error: unknown) => {
+      desktopStartup.log.write("plugins.failed", { error });
+    });
     updateService.subscribe((state) => {
       if (mainWindow && !mainWindow.isDestroyed()) {
         mainWindow.webContents.send(UPDATE_STATE_EVENT_CHANNEL, state);
@@ -2519,4 +2554,8 @@ app.on("before-quit", (event) => {
   }
   event.preventDefault();
   beginGracefulShutdown();
+});
+
+app.on("will-quit", () => {
+  void pluginHost?.dispose();
 });

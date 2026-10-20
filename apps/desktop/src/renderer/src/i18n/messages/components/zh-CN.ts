@@ -1,4 +1,5 @@
 import imageModelSettings from "./imageModelSettings/zh-CN";
+import pluginSettings from "./pluginSettings/zh-CN";
 import webSearchSettings from "./webSearchSettings/zh-CN";
 import metadataEditMessages from "./metadataEditMessages/zh-CN";
 import catalogLabels from "./catalogLabels/zh-CN";
@@ -375,5 +376,6 @@ export default {
   workspaceFeatureModules,
   workspaceShell,
   writingContextPanel,
-  writingWorkspaceModule
+  writingWorkspaceModule,
+  pluginSettings
 };

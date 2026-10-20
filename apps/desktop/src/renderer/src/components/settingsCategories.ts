@@ -2,6 +2,7 @@ import { createScopedTranslator } from "../i18n";
 
 const imageT = createScopedTranslator("components.imageModelSettings");
 const webSearchT = createScopedTranslator("components.webSearchSettings");
+const pluginT = createScopedTranslator("components.pluginSettings");
 const t = createScopedTranslator("components.settingsPage");
 
 export interface SettingsCategory {
@@ -170,6 +171,24 @@ export const settingsSections: SettingsSection[] = [
           return t("moreFeaturesKeywords");
         },
         icon: "settings"
+      }
+    ]
+  },
+  {
+    id: "extensions",
+    get label() {
+      return t("extensions");
+    },
+    categories: [
+      {
+        id: "plugins",
+        get label() {
+          return pluginT("title");
+        },
+        get keywords() {
+          return pluginT("keywords");
+        },
+        icon: "sparkles"
       }
     ]
   },

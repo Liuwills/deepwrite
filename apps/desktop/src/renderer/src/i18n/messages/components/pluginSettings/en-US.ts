@@ -1,0 +1,52 @@
+export default {
+  title: "Plugins",
+  keywords: "plugin extension third-party proxy model provider",
+  intro:
+    "Extend DeepWrite with plugins. Plugins can connect external model services, reuse apps you are already signed in to, or add new workflows. Install, disable and remove them here.",
+  installedCount: "{count} installed",
+  addPlugin: "Add plugin",
+  installSource: "Install from",
+  sourceLocal: "Local folder",
+  sourceNpm: "npm package",
+  sourceGithub: "GitHub repository",
+  specLocalPlaceholder: "Absolute path to the plugin folder",
+  specNpmPlaceholder: "e.g. workbuddy-connect (optionally pinned to a version)",
+  specGithubPlaceholder: "e.g. https://github.com/owner/repo",
+  browse: "Browse…",
+  install: "Install",
+  installing: "Installing…",
+  installHintLocal:
+    "The folder must contain a plugin.json manifest. It is copied into DeepWrite's plugin folder.",
+  installHintNpm:
+    "Downloads and unpacks the package from npm. Requires Node.js and npm on this machine.",
+  installHintGithub:
+    "Clones the repository's default branch. Requires network access to GitHub.",
+  securityNote:
+    "Plugins are third-party code running with full local privileges. Only install sources you trust and read their documentation first.",
+  loading: "Loading…",
+  unsupported: "This build does not expose the plugin API.",
+  emptyTitle: "No plugins installed",
+  emptyDescription:
+    "Choose “Add plugin” and enter an npm package name, a GitHub repository URL, or a local folder path.",
+  loadFailed: "Could not read the plugin list: {message}",
+  installFailed: "Install failed: {message}",
+  uninstallFailed: "Uninstall failed: {message}",
+  reloadFailed: "Reload failed: {message}",
+  toggleFailed: "Could not change the plugin state: {message}",
+  installed: "Installed “{name}”",
+  uninstalled: "Removed “{name}”",
+  reloaded: "Reloaded “{name}”",
+  uninstall: "Uninstall",
+  confirmUninstall: "Confirm",
+  cancel: "Cancel",
+  reload: "Reload",
+  stateActive: "Running",
+  stateDisabled: "Disabled",
+  stateError: "Failed",
+  sourceBundled: "Built-in",
+  sourceLocalLabel: "Local",
+  sourceNpmLabel: "npm",
+  sourceGithubLabel: "GitHub",
+  capabilityModelProvider: "Model provider",
+  modelCount: "{count} models"
+};

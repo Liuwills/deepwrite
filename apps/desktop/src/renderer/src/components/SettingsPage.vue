@@ -42,6 +42,7 @@ import ImageModelSettingsPanel from "./ImageModelSettingsPanel.vue";
 import VoiceSettingsPanel from "./VoiceSettingsPanel.vue";
 import WebSearchSettingsPanel from "./WebSearchSettingsPanel.vue";
 import MoreFeaturesSettingsPanel from "./MoreFeaturesSettingsPanel.vue";
+import PluginSettingsPanel from "./PluginSettingsPanel.vue";
 import { settingsSections as sections } from "./settingsCategories";
 
 const ArchivedConversationsPanel = defineAsyncComponent(
@@ -381,6 +382,8 @@ async function selectCategory(id: string): Promise<void> {
         />
 
         <AppearanceSettingsPanel v-else-if="activeCategory === 'appearance'" />
+
+        <PluginSettingsPanel v-else-if="activeCategory === 'plugins'" />
 
         <ArchivedConversationsPanel
           v-else-if="activeCategory === 'archived-conversations'"

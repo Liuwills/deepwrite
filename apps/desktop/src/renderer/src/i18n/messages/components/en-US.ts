@@ -1,4 +1,5 @@
 import imageModelSettings from "./imageModelSettings/en-US";
+import pluginSettings from "./pluginSettings/en-US";
 import webSearchSettings from "./webSearchSettings/en-US";
 import metadataEditMessages from "./metadataEditMessages/en-US";
 import catalogLabels from "./catalogLabels/en-US";
@@ -375,5 +376,6 @@ export default {
   workspaceFeatureModules,
   workspaceShell,
   writingContextPanel,
-  writingWorkspaceModule
+  writingWorkspaceModule,
+  pluginSettings
 };

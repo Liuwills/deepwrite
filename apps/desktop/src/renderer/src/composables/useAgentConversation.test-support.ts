@@ -342,6 +342,14 @@ function createDeferredApi(): {
       }),
       cancel: vi.fn(async () => {})
     },
+    plugins: {
+      list: vi.fn(async () => ({ directory: "", plugins: [] })),
+      install: vi.fn(async () => ({ directory: "", plugins: [] })),
+      setEnabled: vi.fn(async () => ({ directory: "", plugins: [] })),
+      uninstall: vi.fn(async () => ({ directory: "", plugins: [] })),
+      reload: vi.fn(async () => ({ directory: "", plugins: [] })),
+      chooseSource: vi.fn(async () => ({ path: null }))
+    },
     webSearch: {
       getSettings: vi.fn(async () => {
         throw new Error("Web search is not used by conversation tests.");

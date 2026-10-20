@@ -1,0 +1,9 @@
+{
+  "id": "workbuddy-connect",
+  "name": "WorkBuddy Connect",
+  "version": "0.1.0",
+  "description": "复用本机 WorkBuddy 桌面端的登录状态，把 WorkBuddy 的模型接入 DeepWrite 的模型选择器。",
+  "author": "DeepWrite",
+  "main": "index.mjs",
+  "capabilities": ["model-provider"]
+}

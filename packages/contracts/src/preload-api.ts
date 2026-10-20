@@ -181,6 +181,7 @@ export interface DeepWriteApi extends TextContextMenuPreloadApi {
   libraryPackage: import("./library-package").LibraryPackageApi;
   imageModels: import("./image-models").ImageModelsApi;
   webSearch: import("./web-search").WebSearchApi;
+  plugins: import("./plugins").PluginsApi;
   windowFrame?: WindowFrameApi;
   system: {
     health(): Promise<SystemHealthPayload>;

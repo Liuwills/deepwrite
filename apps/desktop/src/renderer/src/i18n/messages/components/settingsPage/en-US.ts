@@ -19,6 +19,7 @@ export default {
   appearance: "Appearance",
   voiceSettings: "Voice models",
   contextSettings: "Context",
+  extensions: "Extensions",
   archived: "Archived",
   archivedConversations: "Archived chats",
   archivedConversationsDescription:

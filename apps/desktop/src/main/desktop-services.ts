@@ -8,6 +8,7 @@ import {
 } from "@deepwrite/contracts";
 import { createId } from "@deepwrite/shared";
 import { safeStorage } from "electron";
+import { join } from "node:path";
 import { createCloudBackupFeature } from "../extras/cloud-backup/create-service";
 import { createDesktopDeviceSync } from "../extras/device-sync";
 import type { ConversationSyncLease } from "../extras/device-sync/conversations/lease";
@@ -30,6 +31,7 @@ import { LongAgentConfigStore } from "./long-agent-config-store";
 import { MarketplaceClient } from "./marketplace-client";
 import { ModelConfigStore } from "./model-config-store";
 import { ModelUsageStore } from "./model-usage-store";
+import { PluginHost } from "./plugins/plugin-host";
 import { SoftwareTokenUsageReporter } from "./software-token-usage-reporter";
 import type { StartupLog } from "./startup-log";
 import { UpdateService } from "./update-service";
@@ -45,6 +47,8 @@ interface DesktopServiceOptions {
   /** Lets device sync hold the conversations the window has open while it writes them. */
   conversationLease: ConversationSyncLease;
   installUpdate: () => void;
+  /** Folder that ships DeepWrite's own plugins inside the app bundle. */
+  builtinPluginsDirectory?: string;
 }
 
 /** Construction has no network dependency; optional refreshes start separately. */
@@ -101,6 +105,17 @@ export function createDesktopServices(options: DesktopServiceOptions) {
   return {
     imageService,
     webSearchService,
+    pluginHost: new PluginHost({
+      userDataPath,
+      appVersion: options.appVersion,
+      pluginsDirectory: join(userDataPath, "plugins"),
+      pluginDataDirectory: join(userDataPath, "plugin-data"),
+      ...(options.builtinPluginsDirectory
+        ? { builtinPluginsDirectory: options.builtinPluginsDirectory }
+        : {}),
+      modelConfigStore,
+      log: (event, details) => console.info(`[deepwrite] ${event}`, details)
+    }),
     coverRenderService: new CoverRenderService(command, imageService),
     modelConfigStore,
     modelUsageStore,

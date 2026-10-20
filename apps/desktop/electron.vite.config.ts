@@ -1,4 +1,5 @@
 import { i18nResourcesPlugin } from "./scripts/i18n-resources";
+import { builtinPluginsPlugin } from "./scripts/builtin-plugins";
 import { resolve } from "node:path";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "electron-vite";
@@ -46,6 +47,12 @@ export default defineConfig({
   main: {
     envDir: workspaceRoot,
     resolve: { alias: aliases },
+    plugins: [
+      builtinPluginsPlugin(
+        resolve(appRoot, "src/main/plugins/builtin"),
+        resolve(appRoot, "out/main/builtin-plugins")
+      )
+    ],
     build: {
       rollupOptions: {
         external: ["electron", ...Object.keys(dependencies)],

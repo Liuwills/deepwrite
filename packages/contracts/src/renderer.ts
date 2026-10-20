@@ -522,5 +522,6 @@ export * from "./book-identity";
 export * from "./image-models";
 export * from "./web-search";
 export * from "./https-base-url";
+export type * from "./plugins";
 export { ChatAssistantProjectRefSchema } from "./chat-assistant-base";
 export { ExtrasAgentTaskSchema } from "./extras-agent/tasks";
